@@ -1,10 +1,12 @@
 defmodule Dictionary do
   def word_list do
-    c = File.read!("assets/words.txt")
-    list = String.split(c)
+    "assets/words.txt"
+    |> File.read!()
+    |> String.split()
   end
 
   def random_word do
-    Enum.random(word_list())
+    word_list()
+    |> Enum.random()
   end
 end
