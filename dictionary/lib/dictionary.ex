@@ -3,16 +3,12 @@ defmodule Dictionary do
   Documentation for `Dictionary`.
   """
 
-  @doc """
-  Hello world.
+  @word_list "assets/words.txt"
+             |> File.read!()
+             |> String.split(~r"\n", trim: true)
 
-  ## Examples
-
-      iex> Dictionary.hello()
-      :world
-
-  """
-  def hello do
-    :world
+  def random_word do
+    @word_list
+    |> Enum.random()
   end
 end
