@@ -4,21 +4,21 @@ defmodule HangmanTest do
   test "new game returns a structure" do
     game = Hangman.Impl.Game.new_game()
     assert game.turns_left == 7
-    assert game.game_state == :initializing
+    assert game.state == :initializing
     assert length(game.letters) > 0
   end
 
   test "new game returns correct word" do
     game = Hangman.Impl.Game.new_game("foo")
     assert game.turns_left == 7
-    assert game.game_state == :initializing
+    assert game.state == :initializing
     assert game.letters == ["f", "o", "o"]
   end
 
   test "state not changing if game won or lost" do
     for state <- [:won, :lost] do
       game = Hangman.Impl.Game.new_game("foo")
-      game = Map.put(game, :game_state, state)
+      game = Map.put(game, :state, state)
       {new_game, _tally} = Hangman.Impl.Game.make_move(game, "a")
       assert new_game == game
     end
@@ -27,11 +27,11 @@ defmodule HangmanTest do
   test "a duplicate letter is reported" do
     game = Hangman.Impl.Game.new_game("foo")
     {game, _tally} = Hangman.Impl.Game.make_move(game, "a")
-    assert game.game_state != :already_used
+    assert game.state != :already_used
     {game, _tally} = Hangman.Impl.Game.make_move(game, "b")
-    assert game.game_state != :already_used
+    assert game.state != :already_used
     {game, _tally} = Hangman.Impl.Game.make_move(game, "a")
-    assert game.game_state == :already_used
+    assert game.state == :already_used
   end
 
   test "letters used are recorded" do
@@ -45,13 +45,13 @@ defmodule HangmanTest do
   test "letters in word are recognized" do
     game = Hangman.Impl.Game.new_game("foo")
     {_game, tally} = Hangman.Impl.Game.make_move(game, "f")
-    assert tally.game_state == :good_guess
+    assert tally.state == :good_guess
   end
 
   test "letters not in word are recognized" do
     game = Hangman.Impl.Game.new_game("foo")
     {_game, tally} = Hangman.Impl.Game.make_move(game, "b")
-    assert tally.game_state == :bad_guess
+    assert tally.state == :bad_guess
   end
 
   test "winning game sequence" do
@@ -87,7 +87,7 @@ defmodule HangmanTest do
 
   def check_one_move([guess, state, turns, letters, used], g) do
     {game, tally} = Hangman.Impl.Game.make_move(g, guess)
-    assert tally.game_state == state
+    assert tally.state == state
     assert tally.turns_left == turns
     assert tally.letters == letters
     assert tally.used == used

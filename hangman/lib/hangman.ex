@@ -1,6 +1,6 @@
 defmodule Hangman do
   @moduledoc """
-  Documentation for `Hangman`.
+  Public API for `Hangman`.
   """
   alias Hangman.Impl.Game
   alias Hangman.Types
