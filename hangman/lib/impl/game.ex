@@ -15,9 +15,15 @@ defmodule Hangman.Impl.Game do
 
   @spec new_game() :: t
   def new_game do
+    Dictionary.random_word()
+    |> new_game
+  end
+
+  @spec new_game(String.t()) :: t
+  def new_game(word) do
     # the following macro resolves to `Hangman.Impl.Game`
     %__MODULE__{
-      letters: Dictionary.random_word() |> String.codepoints()
+      letters: word |> String.codepoints()
     }
   end
 end
