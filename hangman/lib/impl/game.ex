@@ -1,9 +1,9 @@
 defmodule Hangman.Impl.Game do
-  alias Hangman.Type
+  alias Hangman.Types
 
   @type t :: %__MODULE__{
           turns_left: integer(),
-          game_state: Type.state(),
+          game_state: Types.state(),
           letters: list(String.t()),
           used: MapSet.t(String.t())
         }
@@ -29,7 +29,7 @@ defmodule Hangman.Impl.Game do
     }
   end
 
-  @spec make_move(t, String.t()) :: {t, Type.tally()}
+  @spec make_move(t, String.t()) :: {t, Types.tally()}
   def make_move(game = %{game_state: state}, _guess) when state in [:won, :lost] do
     game
     |> return_with_tally()
