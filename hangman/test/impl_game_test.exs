@@ -75,7 +75,8 @@ defmodule HangmanTest do
       ["d", :bad_guess, 3, ["_", "_", "_"], ["a", "b", "c", "d"]],
       ["e", :bad_guess, 2, ["_", "_", "_"], ["a", "b", "c", "d", "e"]],
       ["g", :bad_guess, 1, ["_", "_", "_"], ["a", "b", "c", "d", "e", "g"]],
-      ["h", :lost, 0, ["_", "_", "_"], ["a", "b", "c", "d", "e", "g", "h"]]
+      # the game reveals the word when state is :lost
+      ["h", :lost, 0, ["f", "o", "o"], ["a", "b", "c", "d", "e", "g", "h"]]
     ]
     |> test_game_sequence
   end

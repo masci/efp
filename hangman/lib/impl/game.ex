@@ -70,13 +70,17 @@ defmodule Hangman.Impl.Game do
     {game, tally(game)}
   end
 
-  defp tally(game) do
+  def tally(game) do
     %{
       turns_left: game.turns_left,
       state: game.state,
       letters: reveal_guessed_letters(game),
       used: game.used |> MapSet.to_list() |> Enum.sort()
     }
+  end
+
+  defp reveal_guessed_letters(game = %{state: :lost}) do
+    game.letters
   end
 
   defp reveal_guessed_letters(game) do
