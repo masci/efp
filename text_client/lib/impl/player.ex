@@ -8,17 +8,13 @@ defmodule TextClient.Impl.Player do
     interact({game, tally})
   end
 
-  @spec interact({Types.game(), Types.tally()}) :: :ok
-  def interact({_game, _tally = %{state: :won}}) do
-    IO.puts("Congratulations, you won!")
-  end
+  @spec interact({Hangman.game(), Types.tally()}) :: :ok
+  def interact({_game, _tally = %{state: :won}}), do: IO.puts("Congratulations, you won!")
 
-  @spec interact({Types.game(), Types.tally()}) :: :ok
   def interact({_game, tally = %{state: :lost}}) do
     IO.puts("You lost! The word was #{tally.letters |> Enum.join()}")
   end
 
-  @spec interact({Types.game(), Types.tally()}) :: :ok
   def interact({game, tally}) do
     IO.puts(feedback_for(tally))
     IO.puts(current_word(tally))
@@ -27,18 +23,15 @@ defmodule TextClient.Impl.Player do
     |> interact()
   end
 
-  @spec interact(Types.tally()) :: String.p()
+  @spec feedback_for(Types.tally()) :: String.t()
   def feedback_for(tally = %{state: :initializing}) do
     "Welcome! I'm thinking of a #{tally.letters |> length} letter word"
   end
 
-  @spec interact(Types.tally()) :: String.p()
   def feedback_for(_tally = %{state: :good_guess}), do: "Good guess!"
 
-  @spec interact(Types.tally()) :: String.p()
   def feedback_for(_tally = %{state: :bad_guess}), do: "Sorry, letter not in word!"
 
-  @spec interact(Types.tally()) :: String.p()
   def feedback_for(_tally = %{state: :already_used}), do: "You already used that letter!"
 
   def current_word(tally) do
